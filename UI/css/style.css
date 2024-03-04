@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+@font-face {
+  font-family: Helvetica;
+  src: url(../assets/font/Helvetica.ttf);
+}
+
+:root {
+  --white: #ecf8fd;
+  --black: #272838;
+  --orange: #f2b418;
+  --blue: #afcbd5;
+  --brown: #815355;
+}
+
+.scroll-w::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-h::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--orange);
+  border-radius: 10px;
+}
+
+body {
+  width: 100%;
+  background: var(--black);
+  color: var(--white);
+  font-family: Helvetica;
+  letter-spacing: 1px;
+  padding: 0 100px;
+  min-height: 100dvh;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w {
+  width: max-content;
+}
+
+.h-screen {
+  height: 100dvh;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+#income-edit-button::after {
+  content: "";
+  width: 0%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: var(--blue);
+  border-radius: 10px;
+  transition: width 1s ease;
+}
+
+#income-edit-button:hover {
+  border: none !important;
+}
+
+#income-edit-button:hover::after {
+  width: 100%;
+}
+
+.placeholder {
+  color: var(--blue);
+}
+
+.placeholder.submit {
+  border: 0 !important;
+  background: var(--orange) !important;
+  color: var(--black);
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+.card {
+  width: 250px;
+  height: 250px;
+  background: #222222;
+  border-radius: 10px;
+  flex-shrink: 0;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.card h4 {
+    color: var(--blue) !important;
+}
+
+.card .inc {
+    color: greenyellow !important;
+}
+
+.card .exp {
+    color: var(--orange) !important;
+}
+
+.card .sav {
+    color: var(--white) !important;
+}
+
+.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
