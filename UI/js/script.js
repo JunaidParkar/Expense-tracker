@@ -35,7 +35,30 @@ dom.id("expenses-slider-parent")
 const expense_history_container = dom.get()
 dom.revert()
 
-const prepare_parents = () => {
+const createCard = (month, income, expense, save) => {
+  dom.revert()
+  let div = dom.create("div").get()
+  dom.revert()
+  let h4 = dom.create("h4")
+  h4.innerText = month
+  let div1 = dom.create("div")
+  div1.innerHTML = `Income: <span>${income}</span>`
+  div1.classList.add("inc")
+  let div2 = dom.create("div")
+  div1.innerHTML = `Expense: <span>${expense}</span>`
+  div1.classList.add("exp")
+  let div3 = dom.create("div")
+  div1.innerHTML = `Save: <span>${save}</span>`
+  div1.classList.add("sav")
+  div.appendChild(h4)
+  div.appendChild(div1)
+  div.appendChild(div2)
+  div.appendChild(div3)
+  return div
+}
+
+const prepare_parents = (data) => {
+  console.log(data)
     let div = dom.create("div").get()
     dom.revert()
     div.classList.add("mainParent")
@@ -46,10 +69,7 @@ const prepare_parents = () => {
     div1.classList.add("scroll-h", "card-parent")
     div.appendChild(p1)
     div.appendChild(div1)
-    console.log(div)
 }
-
-prepare_parents()
 
 let expenses = {
   2020: {
@@ -97,5 +117,5 @@ let expenses = {
 };
 
 for (const year in expenses) {
-  console.log(year);
+  prepare_parents(expenses[year])
 }

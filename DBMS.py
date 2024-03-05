@@ -4,6 +4,10 @@ from paths import DATABASE_PATH, EXPENSE_DATABASE_DIR
 from datetime import datetime
 import calendar
 
+def get_current_date():
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    return current_date
+
 def saveCategory(name):
     conn = connect(DATABASE_PATH)
     cur = conn.cursor()
@@ -17,22 +21,35 @@ def saveCategory(name):
         conn.commit()
     conn.close()
 
-def get_current_date():
-    current_date = datetime.now().strftime('%Y-%m-%d')
-    return current_date
-
-def saveExpense(amount, description, category, date_of_expense):
+def saveIncome(year, month, income):
     months_array = calendar.month_name[1:]
-    print(months_array)
+    conn = connect(DATABASE_PATH)
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE IF NOT EXISTS income (id INTEGER PRIMARY KEY, year INTEGER, month TEXT, income REAL)")
+    conn.commit()
+    cur.execute(f"INSERT INTO income (year, month, income) VALUES ({int(year)}, '{str(months_array[int(month) - 1])}', {float(income)})")
+    conn.commit()
+    conn.close()
+
+def getIncome(year, month):
+    months_array = calendar.month_name[1:]
+    conn = connect(DATABASE_PATH)
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM income WHERE year={int(year)} AND month='{str(months_array[month] - 1)}'")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def saveExpense(amount, description, category, date_of_expense, type):
+    months_array = calendar.month_name[1:]
     de = date_of_expense.split("-")
     conn = connect(os.path.join(EXPENSE_DATABASE_DIR, f'{de[0]}.db'))
     cur = conn.cursor()
-    cur.execute(f"CREATE TABLE IF NOT EXISTS {months_array[int(de[1])]} (id INTEGER PRIMARY KEY, amount REAL, date_of_expense DATE, category TEXT, description TEXT, date_of_registration DATE)")
+    cur.execute(f"CREATE TABLE IF NOT EXISTS {months_array[int(de[1]) - 1]} (id INTEGER PRIMARY KEY, amount REAL, date_of_expense DATE, category TEXT, description TEXT, date_of_registration DATE, type TEXT)")
     conn.commit()
     current_date = get_current_date()
-    
-    # Manually format string values and enclose them in single quotes
-    query = f"INSERT INTO {months_array[int(de[1])]} (amount, date_of_expense, category, description, date_of_registration) VALUES ({float(amount)}, '{date_of_expense}', '{str(category)}', '{str(description)}', '{current_date}')"
+    query = f"INSERT INTO {months_array[int(de[1]) - 1]} (amount, date_of_expense, category, description, date_of_registration, type) VALUES ({float(amount)}, '{date_of_expense}', '{str(category)}', '{str(description)}', '{current_date}', '{str(type)}')"
     
     cur.execute(query)
     conn.commit()
