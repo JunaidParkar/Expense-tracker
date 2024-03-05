@@ -149,11 +149,32 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
 
+.mainParent {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.mainParent p {
+  margin-bottom: 20px;
+}
+
+.card-parent {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  gap: 15px;
+  height: 270px;
+}
+
 .card {
   width: 250px;
   height: 250px;
   background: #222222;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
   flex-shrink: 0;
   padding: 15px;
   cursor: pointer;
@@ -175,7 +196,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--white) !important;
 }
 
-.ellipsis {
+.card h4,
+.card div {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
