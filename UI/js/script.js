@@ -1,4 +1,7 @@
 const dom = Dkit.init();
+const scroller = new scrollManager()
+
+scroller.addListener()
 
 dom.revert();
 dom.id("cursor");
@@ -6,70 +9,6 @@ dom.id("cursor");
 const cc = new customCursor(dom.get(), false);
 cc.getCursor();
 dom.revert();
-
-dom.id("expenses-slider-parent");
-const slider_parent = dom.get();
-dom.revert();
-
-dom.class("card-parent");
-const card_parent = Array.from(dom.get());
-dom.revert();
-
-card_parent.forEach((parent) => {
-  parent.addEventListener("wheel", (e) => {
-    if (
-      (e.deltaY > 0 &&
-        parent.scrollLeft + parent.clientWidth === parent.scrollWidth) ||
-      (e.deltaY < 0 &&
-        parent.scrollLeft + parent.clientWidth === parent.clientWidth)
-    ) {
-      return;
-    } else {
-      e.preventDefault();
-      parent.scrollLeft += e.deltaY;
-    }
-  });
-});
-
-dom.id("expenses-slider-parent")
-const expense_history_container = dom.get()
-dom.revert()
-
-const createCard = (month, income, expense, save) => {
-  dom.revert()
-  let div = dom.create("div").get()
-  dom.revert()
-  let h4 = dom.create("h4")
-  h4.innerText = month
-  let div1 = dom.create("div")
-  div1.innerHTML = `Income: <span>${income}</span>`
-  div1.classList.add("inc")
-  let div2 = dom.create("div")
-  div1.innerHTML = `Expense: <span>${expense}</span>`
-  div1.classList.add("exp")
-  let div3 = dom.create("div")
-  div1.innerHTML = `Save: <span>${save}</span>`
-  div1.classList.add("sav")
-  div.appendChild(h4)
-  div.appendChild(div1)
-  div.appendChild(div2)
-  div.appendChild(div3)
-  return div
-}
-
-const prepare_parents = (data) => {
-  console.log(data)
-    let div = dom.create("div").get()
-    dom.revert()
-    div.classList.add("mainParent")
-    let p1 = dom.create("p").get()
-    dom.revert()
-    let div1 = dom.create("div").get()
-    dom.revert()
-    div1.classList.add("scroll-h", "card-parent")
-    div.appendChild(p1)
-    div.appendChild(div1)
-}
 
 let expenses = {
   2020: {
@@ -116,6 +55,17 @@ let expenses = {
   },
 };
 
-for (const year in expenses) {
-  prepare_parents(expenses[year])
-}
+const monthlyStat = [
+  [1, 2024, "January", 201000.0, 12000.0, "2024-01-20"],
+  [2, 2024, "February", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "May", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "November", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "September", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "October", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "July", 200000.0, 4000.0, "2024-02-20"],
+  [2, 2024, "March", 200000.0, 4000.0, "2024-02-20"],
+  [3, 2023, "April", 200000.0, 4000.0, "2023-01-20"],
+];
+
+const monthlyStatManager = new monthlyStatsManager(monthlyStat, scroller)
+monthlyStatManager.init()

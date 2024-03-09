@@ -28,6 +28,12 @@ var Dkit = /*#__PURE__*/function () {
       return this;
     }
   }, {
+    key: "from",
+    value: function from(element) {
+      this.element = element;
+      return this;
+    }
+  }, {
     key: "tag",
     value: function tag(tagName) {
       if (this.element) {

@@ -1,6 +1,6 @@
 from sqlite3 import connect
 import os
-from paths import DATABASE_PATH, EXPENSE_DATABASE_DIR
+from paths import DATABASE_PATH, EXPENSE_DATABASE_DIR, SAVINGS_DATABASE_PATH
 from datetime import datetime
 import calendar
 
@@ -40,10 +40,6 @@ class DBMS:
         cur = conn.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS income (id INTEGER PRIMARY KEY, year INTEGER, month TEXT, income REAL, expense REAL, date DATE)")
         conn.commit()
-        is_income_added = self.__is_specific_income_available(int(date[0]), str(self.__get_months_list()[int(date[1]) - 1]))
-        if is_income_added:
-            conn.close()
-            return f"Income already added for {str(self.__get_months_list()[int(date[1]) - 1])}"
         cur.execute(f"INSERT INTO income (year, month, income, expense, date) VALUES ({int(date[0])}, '{str(self.__get_months_list()[int(date[1]) - 1])}', {float(amount)}, {float(0.00)}, '{'-'.join(date)}')")
         conn.commit()
         conn.close()
@@ -75,8 +71,27 @@ class DBMS:
                     conn2.commit()
                     conn2.close()
         else:
-            return f"Income not available for month {self.__get_months_list()[int(date[1]) - 1]}"
-            
+            self.addIncome(0, date)
+    
+    def getExpense(self, date):
+        date = date.split("-")
+        conn = connect(os.path.join(self.__EXPENSE_DATABASE_DIRECTORY, f"{date[0]}.db"))
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM {self.__get_months_list()[int(date[1]) - 1]}")
+        expenseSet = cur.fetchall()
+        conn.commit()
+        conn.close()
+        return expenseSet
+
+    def getMonthlyStat(self):
+        conn = connect(self.__DATABASE_PATH)
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM income")
+        data = cur.fetchall()
+        conn.commit()
+        conn.close()
+        return data
+
     def trial(self, date = False):
         date = date.split("-") if not date is False else self.__get_current_date().split("-")
         conn2 = connect(self.__DATABASE_PATH)
@@ -87,8 +102,54 @@ class DBMS:
         conn2.close()
         return hel
 
+class SAVINGSDBMS:
+    def __init__(self, saving_databse_path):
+        self.SAVING_DATABSE_PATH = saving_databse_path
 
-dbm = DBMS(DATABASE_PATH, EXPENSE_DATABASE_DIR)
+    def __get_current_date(self):
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        return current_date
+
+    def saveAmount(self, amount, description, type="negative", date=None):
+        date = date if not date is None else self.__get_current_date()
+        conn = connect(self.SAVING_DATABSE_PATH)
+        cur = conn.cursor()
+        cur.execute(f"CREATE TABLE IF NOT EXISTS savings (id INTEGER PRIMARY KEY, amount REAL, date DATE, description TEXT, type TEXT)")
+        conn.commit()
+        cur.execute(f"INSERT INTO savings (amount, date, description, type) VALUES ({float(amount)}, '{str(date)}', '{str(description)}', '{str(type)}')")
+        conn.commit()
+        conn.close()
+
+    def updateAmount(self, id, amount, description, date, type="negative"):
+        conn = connect(self.SAVING_DATABSE_PATH)
+        cur = conn.cursor()
+        cur.execute(f"CREATE TABLE IF NOT EXISTS savings (id INTEGER PRIMARY KEY, amount REAL, date DATE, description TEXT, type TEXT)")
+        cur.execute(f"UPDATE savings SET amount={float(amount)}, date='{str(date)}', description='{str(description)}', type='{str(type)}' WHERE id={int(id)}")
+        conn.commit()
+        conn.close()
+
+    def deleteData(self, id):
+        conn = connect(self.SAVING_DATABSE_PATH)
+        cur = conn.cursor()
+        cur.execute(f"DELETE FROM savings WHERE id={int(id)}")
+        conn.commit()
+        conn.close()
+
+
+
+saving = SAVINGSDBMS(SAVINGS_DATABASE_PATH)
+# saving.saveAmount(20000, "Salary", "positive")
+# saving.saveAmount(15000, "Salary", "positive")
+# saving.saveAmount(33000, "food essentials", "negative")
+# saving.saveAmount(50000, "clothings", "negative")
+# saving.saveAmount(20000, "Salary", "positive")
+# saving.saveAmount(45000, "Salary", "positive")
+
+# saving.updateAmount(7, 1000, "Basic ammenities", "2024-02-10")
+saving.deleteData(3)
+
+
+# dbm = DBMS(DATABASE_PATH, EXPENSE_DATABASE_DIR)
 # income = dbm.addIncome(200000, "2024-01-20")
 # print(income if not income is None else "Income successfully added")
 # income = dbm.addIncome(200000, "2024-02-20")
@@ -101,10 +162,15 @@ dbm = DBMS(DATABASE_PATH, EXPENSE_DATABASE_DIR)
 # print(income if not income is None else "Income successfully added")
 
 # exp = dbm.addExpense(2000, "gaming", "Purchased GTA V", "negative", id=2, date="2024-01-20")
+# print(exp)
 # exp = dbm.addExpense(2000, "gaming", "Purchased GTA V", "negative", id=2, date="2024-02-20")
+# print(exp)
 # exp = dbm.addExpense(2000, "gaming", "Purchased GTA V", "negative", id=2, date="2024-02-20")
+# print(exp)
 # exp = dbm.addExpense(2000, "gaming", "Purchased GTA V", "negative", id=2, date="2023-01-20")
+# print(exp)
 # exp = dbm.addExpense(2000, "gaming", "Purchased GTA V", "negative", id=2, date="2023-01-23")
+# print(exp)
 # exp = dbm.addExpense(10000, "gaming", "Purchased GTA V", "negative", id=2, date="2024-01-23")
 # print(exp)
 # exp = dbm.addExpense(1000, "rent", "Company rent", "positive", date="2024-01-23")
@@ -126,3 +192,9 @@ dbm = DBMS(DATABASE_PATH, EXPENSE_DATABASE_DIR)
 # print(income if not income is None else "Income successfully added")
 
 # print(exp)
+
+# expense = dbm.getExpense("2024-01-20")
+# print(expense)
+
+# ms = dbm.getMonthlyStat()
+# print([list(t) for t in ms])
