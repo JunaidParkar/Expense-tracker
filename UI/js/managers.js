@@ -58,6 +58,7 @@ class monthlyStatsManager {
       }
       stats[stat[1]].push({
         id: stat[0],
+        year: stat[1],
         month: stat[2],
         income: parseFloat(stat[3]),
         expense: parseFloat(stat[4]),
@@ -93,7 +94,7 @@ class monthlyStatsManager {
       let divc = this.dom.create("div").get();
       divc.classList.add("card");
       divc.dataset.id = months.id;
-      divc.dataset.date = months.date;
+      divc.dataset.year = months.year;
       let h4 = this.dom.create("h4").get();
       this.dom.revert();
       h4.textContent = months.month;

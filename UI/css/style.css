@@ -202,3 +202,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.messageAlert {
+  width: 350px;
+  background: var(--blue);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  padding: 15px;
+}
+
+.messageAlert h3{
+  color: var(--brown);
+  font-weight: 700;
+  letter-spacing: .6;
+}
+
+.messageAlert p {
+  font-weight: 400;
+  color: var(--black);
+}

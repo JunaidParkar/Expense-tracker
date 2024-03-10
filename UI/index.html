@@ -24,25 +24,25 @@
 
         <div style="margin-top: 30px; min-width: 550px; width: 50%;">
             <h5 style="font-size: 2.5dvh; font-weight: 500; letter-spacing: .8px;">Add expense</h5>
-            <form class="w-full flex flex-col" style="gap: 20px; margin-top: 25px;">
+            <form class="w-full flex flex-col" style="gap: 20px; margin-top: 25px;" id="expenseForm">
                 <div class="flex flex-wrap" style="gap: 20px;">
                     <div class="flex flex-col w-full" style="gap: 5px;">
                         <label style="color: var(--blue);" for="">Enter the amount</label>
                         <input
                             style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;"
-                            class="placeholder" type="text">
+                            class="placeholder" type="number" name="Amount">
                     </div>
                     <div class="flex flex-col w-full" style="gap: 5px;">
                         <label style="color: var(--blue);" for="description">Enter the short description</label>
                         <input
                             style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;"
-                            class="placeholder" type="text" id="description">
+                            class="placeholder" type="text" id="description" name="Description">
                     </div>
                     <div class="flex flex-col w-full" style="gap: 5px;">
                         <label style="color: var(--blue);" for="date">Set the date of transaction</label>
                         <input
                             style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;"
-                            class="placeholder" type="date" id="date">
+                            class="placeholder" type="date" id="date" name="Date">
                             <!-- <p style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;"
                             class="placeholder"></p> -->
                     </div>
@@ -74,8 +74,11 @@
     <script src="./js/gsap.js"></script>
     <script src="./js/dkit.js"></script>
     <script src="./js/cursor.js"></script>
+    <script src="./js/form.js"></script>
+    <!-- <script src="./eel.js"></script> -->
     <script src="./js/managers.js"></script>
     <script src="./js/script.js"></script>
+    <script src="./js/eelManager.js"></script>
 </body>
 
 </html>
