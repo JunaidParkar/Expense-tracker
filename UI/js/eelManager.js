@@ -1,6 +1,5 @@
 let stats = [
-  [1, 2022, "January", 0.0, 481.08, "2022-01"],
-  [2, 2022, "January", 2393.52, 0.0, "2022-01"],
+  [1, 2022, "January", 2393.52, 481.08, "2022-01"],
   [3, 2022, "February", 0.0, 498.6, "2022-02"],
   [4, 2022, "February", 611.92, 0.0, "2022-02"],
   [5, 2022, "March", 0.0, 430.33, "2022-03"],
@@ -73,14 +72,86 @@ let stats = [
   [72, 2024, "December", 1403.24, 0.0, "2024-12"],
 ];
 
-// console.log(stats)
-
 const manageMonthlyStat = async () => {
-  // let stat = await eel.getMonthlyStats()();
-  let stat = stats;
-  // console.log(stat)
+  let stat = await eel.getMonthlyStats()();
+  // let stat = stats;
+  let scroller = new scrollManager();
   const monthlyStatManager = new monthlyStatsManager(stat, scroller);
   monthlyStatManager.init();
+  cardClickr()
 };
 
-manageMonthlyStat();
+dom.revert();
+if (dom.id("expenses-slider-parent").get()) {
+  manageMonthlyStat()
+}
+
+let monthStat = [
+  [1,
+  33590.00,
+  "2024-01",
+  "Rent",
+  "Salary",
+  "2024-03-11",
+  "positive"],
+  [2,
+  45.12,
+  "2024-01",
+  "Utilities",
+  "Electricity bill",
+  "2024-03-11",
+  "negative"],
+  [3,
+  86.86,
+  "2024-01",
+  "Groceries",
+  "Monthly grocery shopping",
+  "2024-03-11",
+  "negative"],
+];
+
+const showSpecificMonthData = async (date) => {
+  let datas = await eel.getSpecificStats(date)()
+  console.log(datas)
+  // let datas = monthStat
+  let expense = 0
+  let income = 0
+  datas.forEach(data => {
+    dom.revert()
+    let tr = dom.create("tr").get()
+    dom.revert()
+    tr.dataset.id = data[0]
+    let td1 = dom.create("td").get()
+    dom.revert()
+    let td2 = dom.create("td").get()
+    dom.revert()
+    let td3 = dom.create("td").get()
+    dom.revert()
+    let td4 = dom.create("td").get()
+    dom.revert()
+    let td5 = dom.create("td").get()
+    dom.revert()
+    td1.textContent = data[2]
+    td2.textContent = data[1]
+    td3.textContent = data[3]
+    td4.textContent = data[4]
+    td5.textContent = data[6] == "negative" ? "Check out" : "Check in"
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+    tr.appendChild(td4)
+    tr.appendChild(td5)
+    dom.revert()
+    expense = data[6] == "negative" ? expense + data[1] : expense
+    income = data[6] == "negative" ? income : income + data[1]
+    dom.id("table").get().appendChild(tr)
+    dom.revert()
+  });
+  dom.revert()
+  dom.id("recieved").get().textContent = income.toFixed(2)
+  dom.revert()
+  dom.id("spend").get().textContent = expense.toFixed(2)
+  dom.revert()
+  dom.id("saving").get().textContent = (income - expense).toFixed(2)
+  dom.revert()
+}

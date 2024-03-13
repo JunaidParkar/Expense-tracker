@@ -1,43 +1,23 @@
-const dom = Dkit.init();
-const scroller = new scrollManager()
-
-scroller.addListener()
+const scroller = new scrollManager();
+scroller.addListener();
 
 dom.revert();
-dom.id("cursor");
-
-const cc = new customCursor(dom.get(), false);
-cc.getCursor();
+const head = dom.tag("head").get()[0];
 dom.revert();
-
-const expenseForm = dom.id("expenseForm").get()
-dom.revert()
-
-const showMessage = (message) => {
-    dom.revert()
-    let div = dom.create("div").get()
-    dom.revert()
-    let h3 = dom.create("h3").get()
-    dom.revert()
-    let p = dom.create("p").get()
-    dom.revert()
-    div.classList.add("messageAlert")
-    h3.textContent = "Form alert"
-    p.textContent = message
-    div.appendChild(h3)
-    div.appendChild(p)
-    document.body.append(div)
-    setTimeout(() => {
-        document.body.removeChild(div)
-    }, 3000);
+if (dom.from(head).tag("title").get()[0].textContent == "Expense") {
+  var params = new URLSearchParams(window.location.search);
+  var year = params.get("year");
+  var month = params.get("month");
+  if (!year || !month) {
+    window.location.href = "index.html"
+  }
+  dom.revert()
+  dom.id("heading").get().textContent = month + " " + year
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  showSpecificMonthData(`${year}-${months.indexOf(month)}`)
 }
 
-let formV = new FormValidator(expenseForm, true, [], [
-    {
-      type: "custom_required",
-      func: showMessage
-    }
-  ])
-formV.validate(() => {
-    console.log("validation completed")
-})
+dom.revert();
+
+
+const getBack = () => window.location.href = "index.html"
