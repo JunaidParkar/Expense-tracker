@@ -23,7 +23,7 @@
         </nav>
 
         <div style="margin-top: 30px; min-width: 550px; width: 50%;">
-            <h5 style="font-size: 2.5dvh; font-weight: 500; letter-spacing: .8px;">Add expense</h5>
+            <h5 style="font-size: 2.5dvh; font-weight: 500; letter-spacing: .8px;">Add transaction.</h5>
             <form class="w-full flex flex-col" style="gap: 20px; margin-top: 25px;" id="expenseForm">
                 <div class="flex flex-wrap" style="gap: 20px;">
                     <div class="flex flex-col w-full" style="gap: 5px;">
@@ -45,6 +45,14 @@
                             class="placeholder" type="date" id="date" name="Date">
                             <!-- <p style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;"
                             class="placeholder"></p> -->
+                    </div>
+                    <div class="flex flex-col w-full" style="gap: 5px;">
+                        <label style="color: var(--blue);" for="type" onclick="document.getElementById('type').click()">Please select the type for transaction.</label>
+                        <select name="" id="type" class="w-full placeholder"
+                            style="padding: 5px 0; font-size: 1.7dvh; outline: none; border: none; border-bottom: 2px solid var(--blue); background: transparent;">
+                            <option value="Check In">Check In</option>
+                            <option value="Check Out">Check Out</option>
+                        </select>
                     </div>
                     <div class="flex flex-col w-full" style="gap: 5px;">
                         <label style="color: var(--blue);" for="">Please select the category for expense</label>
@@ -74,7 +82,7 @@
     <script src="./js/dkit.js"></script>
     <script src="./js/cursor.js"></script>
     <script src="./js/form.js"></script>
-    <script src="./eel.js"></script>
+    <!-- <script src="./eel.js"></script> -->
     <script src="./js/main.js"></script>
     <script src="./js/managers.js"></script>
     <script src="./js/eelManager.js"></script>

@@ -53,6 +53,7 @@ const cardClickr = () => {
   if (cards.length > 0) {
     cards.forEach((card) => {
       card.addEventListener("click", (e) => {
+        console.log(e.target)
         let year = e.target.dataset.year;
         dom.revert();
         let month = Array.from(dom.from(e.target).tag("h4").get())[0].innerText;

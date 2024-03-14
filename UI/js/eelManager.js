@@ -73,8 +73,8 @@ let stats = [
 ];
 
 const manageMonthlyStat = async () => {
-  let stat = await eel.getMonthlyStats()();
-  // let stat = stats;
+  // let stat = await eel.getMonthlyStats()();
+  let stat = stats;
   let scroller = new scrollManager();
   const monthlyStatManager = new monthlyStatsManager(stat, scroller);
   monthlyStatManager.init();

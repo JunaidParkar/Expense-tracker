@@ -180,6 +180,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+.card * {
+  pointer-events: none;
+}
+
 .card h4 {
     color: var(--blue) !important;
 }
