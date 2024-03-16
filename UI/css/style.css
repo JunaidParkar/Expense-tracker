@@ -135,13 +135,27 @@ body {
   color: var(--blue);
 }
 
+label {
+  color: var(--blue);
+}
+
+.placeholder {
+  padding: 5px 0;
+  font-size: 1.7dvh;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid var(--blue);
+  background: transparent;
+  color: var(--blue);
+}
+
 .placeholder.submit {
   border: 0 !important;
   background: var(--orange) !important;
-  color: var(--black);
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
+  color: var(--black) !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -185,26 +199,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .card h4 {
-    color: var(--blue) !important;
+  color: var(--blue) !important;
 }
 
 .card .inc {
-    color: greenyellow !important;
+  color: greenyellow !important;
 }
 
 .card .exp {
-    color: var(--orange) !important;
+  color: var(--orange) !important;
 }
 
 .card .sav {
-    color: var(--white) !important;
+  color: var(--white) !important;
 }
 
 .card h4,
 .card div {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .messageAlert {
@@ -221,10 +235,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 15px;
 }
 
-.messageAlert h3{
+.messageAlert h3 {
   color: var(--brown);
   font-weight: 700;
-  letter-spacing: .6;
+  letter-spacing: 0.6;
 }
 
 .messageAlert p {
@@ -238,12 +252,12 @@ table {
 }
 
 table tr:hover {
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 table tr th {
   font-weight: 700;
-  letter-spacing: .9px;
+  letter-spacing: 0.9px;
   color: var(--orange);
 }
 
@@ -252,11 +266,12 @@ table tr td {
   font-weight: 400;
 }
 
-table tr td{
+table tr td {
   color: var(--blue) !important;
 }
 
-table tr th, table tr td {
+table tr th,
+table tr td {
   border: 2px solid var(--blue);
   width: 18%;
   padding: 10px;
@@ -281,7 +296,7 @@ table tr td:nth-child(4) {
   margin: 100px 0;
 }
 
-.ov div{
+.ov div {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -320,4 +335,79 @@ table tr td:nth-child(4) {
   height: 100%;
   border-radius: 50%;
   transform: rotateZ(180deg);
+}
+
+.confirm_screen {
+  width: 100%;
+  height: 100dvh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  backdrop-filter: blur(10px);
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirm_screen>div {
+  width: 500px;
+  background: var(--brown);
+  padding: 20px;
+  border-radius: 20px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm_screen h3 {
+  font-size: 1.8dvh;
+  font-weight: 600;
+  color: var(--orange);
+}
+
+.confirm_screen>div>div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.confirm_screen>div>div h5 {
+  font-size: 1.8dvh;
+  font-weight: 500;
+  color: var(--orange);
+}
+
+.confirm_screen>div>div h5 span {
+  color: var(--blue);
+}
+.confirm_screen>div div:last-child {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirm_screen>div div:last-child div p {
+  width: max-content;
+  text-transform: capitalize;
+}
+
+.confirm_screen>div div:last-child div{
+  width: calc(50% - 5px);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.confirm_screen>div div:last-child div:first-child {
+  background-color: var(--orange);
+  color: var(--black);
+}
+
+.confirm_screen>div div:last-child div:last-child {
+  padding: 8px !important;
+  border: 1px solid var(--white);
 }

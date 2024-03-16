@@ -64,13 +64,9 @@ var Dkit = /*#__PURE__*/function () {
   }, {
     key: "get",
     value: function get() {
-      return this.element;
-    }
-  }, {
-    key: "revert",
-    value: function revert() {
+      var data = this.element;
       this.element = null;
-      return this;
+      return data;
     }
   }], [{
     key: "init",

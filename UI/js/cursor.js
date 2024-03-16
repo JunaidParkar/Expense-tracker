@@ -66,7 +66,7 @@ var customCursor = /*#__PURE__*/function () {
           left: "".concat(e.clientX, "px"),
           top: "".concat(e.clientY, "px"),
           duration: 1,
-          ease: "power2.out"
+          ease: Power2.easeOut
         });
         this.cursor.style.left = "".concat(e.clientX, "px");
         this.cursor.style.top = "".concat(e.clientY, "px");
@@ -101,12 +101,12 @@ var customCursor = /*#__PURE__*/function () {
           x: this.lerp(-50, 50, x),
           y: this.lerp(-50, 50, y),
           duration: 1,
-          ease: "power2.out"
+          ease: Power2.easeOut
         });
         gsap.to(this.cursor, {
           scale: 4,
           duration: 1,
-          ease: "power2.out"
+          ease: Power2.easeOut
         });
         this.isMagnetActive = null;
       }
@@ -115,12 +115,12 @@ var customCursor = /*#__PURE__*/function () {
           x: 0,
           y: 0,
           duration: 1,
-          ease: "power2.out"
+          ease: Power2.easeOut
         });
         gsap.to(_this2.cursor, {
           scale: 1,
           duration: 1,
-          ease: "power2.out"
+          ease: Power2.easeOut
         });
       });
     }

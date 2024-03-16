@@ -4,10 +4,10 @@ class scrollManager {
   }
 
   addListener() {
-    this.dom.revert();
+    
     this.removeListener();
     let card_parent = Array.from(this.dom.class("card-parent").get());
-    this.dom.revert();
+    
 
     card_parent.forEach((parent) => {
       parent.addEventListener("wheel", (e) => {
@@ -17,9 +17,9 @@ class scrollManager {
   }
 
   removeListener() {
-    this.dom.revert();
+    
     const card_parent = Array.from(this.dom.class("card-parent").get());
-    this.dom.revert();
+    
 
     card_parent.forEach((parent) => {
       parent.removeEventListener("wheel", (e) => {
@@ -80,49 +80,53 @@ class monthlyStatsManager {
 
   prepare_elements(year, data) {
     let div = dom.create("div").get();
-    this.dom.revert();
+    
     div.classList.add("mainParent");
     let p1 = this.dom.create("p").get();
-    this.dom.revert();
+    
     p1.textContent = year;
     let div1 = this.dom.create("div").get();
-    this.dom.revert();
+    
     div1.classList.add("scroll-h", "card-parent");
     data.sort(this.sortByMonth);
     data.forEach((months) => {
-      this.dom.revert();
+      
       let divc = this.dom.create("div").get();
       divc.classList.add("card");
-      divc.dataset.id = months.id;
-      divc.dataset.year = months.year;
       let h4 = this.dom.create("h4").get();
-      this.dom.revert();
+      
       h4.textContent = months.month;
       let divC1 = this.dom.create("div").get();
       divC1.classList.add("inc");
       divC1.innerHTML = `Income: <span>${months.income}</span>`;
-      this.dom.revert();
+      
       let divC2 = this.dom.create("div").get();
       divC2.classList.add("exp");
       divC2.innerHTML = `Expense: <span>${months.expense}</span>`;
-      this.dom.revert();
+      
       let divC3 = this.dom.create("div").get();
       divC3.classList.add("sav");
       divC3.innerHTML = `Saving: <span>${months.balance}</span>`;
-      this.dom.revert();
+      
       divc.appendChild(h4);
       divc.appendChild(divC1);
       divc.appendChild(divC2);
       divc.appendChild(divC3);
+      this.cardClickr(divc, months.month, months.year)
       div1.appendChild(divc);
     });
     div.appendChild(p1);
     div.appendChild(div1);
-    this.dom.revert();
     let mains = this.dom.id("expenses-slider-parent").get();
-    this.dom.revert();
+    
     mains.appendChild(div);
   }
+
+  cardClickr(div, month, year) {
+        div.addEventListener("click", e => {
+          window.location.href = `expense.html?year=${year}&month=${month}`;
+        });
+  };
 
   sortByMonth = (a, b) => {
     const monthsOrder = [

@@ -78,10 +78,8 @@ const manageMonthlyStat = async () => {
   let scroller = new scrollManager();
   const monthlyStatManager = new monthlyStatsManager(stat, scroller);
   monthlyStatManager.init();
-  cardClickr()
 };
 
-dom.revert();
 if (dom.id("expenses-slider-parent").get()) {
   manageMonthlyStat()
 }
@@ -117,20 +115,13 @@ const showSpecificMonthData = async (date) => {
   let expense = 0
   let income = 0
   datas.forEach(data => {
-    dom.revert()
     let tr = dom.create("tr").get()
-    dom.revert()
     tr.dataset.id = data[0]
     let td1 = dom.create("td").get()
-    dom.revert()
     let td2 = dom.create("td").get()
-    dom.revert()
     let td3 = dom.create("td").get()
-    dom.revert()
     let td4 = dom.create("td").get()
-    dom.revert()
     let td5 = dom.create("td").get()
-    dom.revert()
     td1.textContent = data[2]
     td2.textContent = data[1]
     td3.textContent = data[3]
@@ -141,17 +132,11 @@ const showSpecificMonthData = async (date) => {
     tr.appendChild(td3)
     tr.appendChild(td4)
     tr.appendChild(td5)
-    dom.revert()
     expense = data[6] == "negative" ? expense + data[1] : expense
     income = data[6] == "negative" ? income : income + data[1]
     dom.id("table").get().appendChild(tr)
-    dom.revert()
   });
-  dom.revert()
   dom.id("recieved").get().textContent = income.toFixed(2)
-  dom.revert()
   dom.id("spend").get().textContent = expense.toFixed(2)
-  dom.revert()
   dom.id("saving").get().textContent = (income - expense).toFixed(2)
-  dom.revert()
 }

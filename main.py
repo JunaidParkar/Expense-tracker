@@ -31,6 +31,9 @@ def getMonthlyStats():
     data = incomeExpense.getMonthlyStat()
     return data
 
-
+@eel.expose
+def addTransaction(amount, category, description, type, date):
+    data = incomeExpense.addExpense(amount, category, description, type, date)
+    return
 
 eel.start("index.html")
