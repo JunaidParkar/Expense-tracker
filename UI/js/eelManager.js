@@ -72,18 +72,6 @@ let stats = [
   [72, 2024, "December", 1403.24, 0.0, "2024-12"],
 ];
 
-const manageMonthlyStat = async () => {
-  // let stat = await eel.getMonthlyStats()();
-  let stat = stats;
-  let scroller = new scrollManager();
-  const monthlyStatManager = new monthlyStatsManager(stat, scroller);
-  monthlyStatManager.init();
-};
-
-if (dom.id("expenses-slider-parent").get()) {
-  manageMonthlyStat()
-}
-
 let monthStat = [
   [1,
   33590.00,
@@ -107,36 +95,3 @@ let monthStat = [
   "2024-03-11",
   "negative"],
 ];
-
-const showSpecificMonthData = async (date) => {
-  let datas = await eel.getSpecificStats(date)()
-  console.log(datas)
-  // let datas = monthStat
-  let expense = 0
-  let income = 0
-  datas.forEach(data => {
-    let tr = dom.create("tr").get()
-    tr.dataset.id = data[0]
-    let td1 = dom.create("td").get()
-    let td2 = dom.create("td").get()
-    let td3 = dom.create("td").get()
-    let td4 = dom.create("td").get()
-    let td5 = dom.create("td").get()
-    td1.textContent = data[2]
-    td2.textContent = data[1]
-    td3.textContent = data[3]
-    td4.textContent = data[4]
-    td5.textContent = data[6] == "negative" ? "Check out" : "Check in"
-    tr.appendChild(td1)
-    tr.appendChild(td2)
-    tr.appendChild(td3)
-    tr.appendChild(td4)
-    tr.appendChild(td5)
-    expense = data[6] == "negative" ? expense + data[1] : expense
-    income = data[6] == "negative" ? income : income + data[1]
-    dom.id("table").get().appendChild(tr)
-  });
-  dom.id("recieved").get().textContent = income.toFixed(2)
-  dom.id("spend").get().textContent = expense.toFixed(2)
-  dom.id("saving").get().textContent = (income - expense).toFixed(2)
-}

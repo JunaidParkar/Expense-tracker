@@ -345,7 +345,7 @@ table tr td:nth-child(4) {
   top: 0;
   backdrop-filter: blur(10px);
   z-index: 9;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
@@ -410,4 +410,8 @@ table tr td:nth-child(4) {
 .confirm_screen>div div:last-child div:last-child {
   padding: 8px !important;
   border: 1px solid var(--white);
+}
+
+.confirm_screen .action_buttons_confirm div {
+  cursor: pointer;
 }

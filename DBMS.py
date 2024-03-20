@@ -39,7 +39,7 @@ class IncomeExpense(Common):
         conn.close()
 
     def addExpense(self, amount, category, description, type="negative", date=None):
-        amount = round(amount, 2)
+        amount = round(float(amount), 2)
         date = date.split("-") if date else self.get_current_date().split("-")
         is_income_available = self.__is_specific_income_available(int(date[0]), int(date[1]))
         if not is_income_available:
@@ -84,11 +84,16 @@ class IncomeExpense(Common):
         conn.close()
 
     def getMonthlyStat(self):
-        conn = connect(self.__DATABASE_PATH)
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM income")
-        data = cur.fetchall()
-        conn.close()
+        if os.path.isfile(self.__DATABASE_PATH):
+            conn = connect(self.__DATABASE_PATH)
+            cur = conn.cursor()
+            cur.execute("CREATE TABLE IF NOT EXISTS income (id INTEGER PRIMARY KEY, year INTEGER, month TEXT, income REAL, expense REAL, date DATE)")
+            conn.commit()
+            cur.execute("SELECT * FROM income")
+            data = cur.fetchall()
+            conn.close()
+        else:
+            data = None
         return data
 
 class Savings:

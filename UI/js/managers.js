@@ -44,13 +44,14 @@ class scrollManager {
 }
 
 class monthlyStatsManager {
-  constructor(monthlyStat, scroller) {
-    this.monthlyStat = monthlyStat;
+  constructor() {
+    this.monthlyStat = null;
     this.dom = Dkit.init();
-    this.scroller = scroller
+    this.scroller = new scrollManager()
   }
 
-  init() {
+  init(stat) {
+    this.monthlyStat = stat
     let stats = {};
     this.monthlyStat.forEach((stat) => {
       if (!stats[stat[1]]) {
@@ -149,4 +150,25 @@ class monthlyStatsManager {
 
     return monthsOrder.indexOf(monthA) - monthsOrder.indexOf(monthB);
   };
+}
+
+class expenseManager {
+  constructor() {}
+
+  async addExpense(amount, category, description, type, date) {
+    return await eel.addTransaction(amount, category, description, type, date)()
+  }
+
+  async getSpecificStats(date) {
+    return await eel.getSpecificStats(date)()
+  }
+
+  async getMonthlyStats() {
+    return await eel.getMonthlyStats()()
+  }
+
+  structureMonthlyStat(stats) {
+    let s = new monthlyStatsManager()
+    s.init(stats)
+  }
 }
