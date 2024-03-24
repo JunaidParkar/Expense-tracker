@@ -1,5 +1,6 @@
 from tkcalendar import Calendar
 from datetime import datetime
+from enum import Enum
 
 def open_calendar(tk, selected_date, window):
     def select_date():
@@ -21,3 +22,6 @@ def open_calendar(tk, selected_date, window):
 
     select_button = tk.CTkButton(top, text="Select", command=select_date)
     select_button.pack(pady=10)
+
+class TransactionModes(Enum):
+    INSERT = bin(68115)
