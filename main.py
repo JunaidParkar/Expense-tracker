@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
+from tkcalendar import DateEntry
 from functions import open_calendar
 from paths import routes, RouteType
 import os
@@ -78,10 +79,15 @@ def show_add_transaction_form(frame_to_destroy, frame_to_show_on_over):
     date_label = ctk.CTkLabel(add_transaction_frame, text="Select date of transaction", font=('Century Gothic' if not js_font else js_font,18))
     date_label.place(x=25, y=440)
 
-    date_set_input = tk.StringVar()
-    date_input = ctk.CTkEntry(add_transaction_frame, state="readonly", textvariable=date_set_input, width=470, font=('Century Gothic' if not js_font else js_font,15))
+    date_set_input = ctk.StringVar()
+    date_input = ctk.CTkEntry(add_transaction_frame, placeholder_text="Click here to select the date", width=470, font=('Century Gothic' if not js_font else js_font,15))
     date_input.place(x=25, y=480)
-    date_input.bind("<1>", lambda event: open_calendar(ctk, date_set_input, window))
+    def setVal(v):
+        date_input.configure(textvariable = date_set_input)
+        date_set_input.set(v)
+        date_input.configure(textvariable = None)
+    # date_input.configure(textvariable = date_set_input)
+    date_input.bind("<1>", lambda event: open_calendar(ctk, setVal, window))
 
     add_transaction_button_frame = ctk.CTkFrame(add_transaction_frame, width=470)
     add_transaction_button_frame.place(x=25, y=530)
