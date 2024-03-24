@@ -10,7 +10,8 @@ def open_calendar(tk, selected_date, window):
     top.wm_transient(window)
     top.title("Expense Tracker")
     today = datetime.today().date()
-    cal = Calendar(top, selectmode="none", maxdate=today)
+    print(today)
+    cal = Calendar(top, selectmode="day", maxdate=today)
     cal.pack(padx=10, pady=10)
 
     select_button = tk.CTkButton(top, text="Select", command=select_date)

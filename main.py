@@ -34,10 +34,12 @@ def clicker(dataf):
     print(dataf)
     print("hey")
 
-def cancel_transaction_form(add_transaction_frame):
+def cancel_transaction_form(add_transaction_frame, frame_to_show_on_over):
     add_transaction_frame.destroy()
+    frame_to_show_on_over()
     
-def show_add_transaction_form():
+def show_add_transaction_form(frame_to_destroy, frame_to_show_on_over):
+    frame_to_destroy.destroy() if frame_to_destroy else ...
     add_transaction_frame = ctk.CTkLabel(window, width=screen_width, height=screen_height)
     add_transaction_frame.place(x=0, y=0)
     add_transaction_frame.lift()
@@ -84,7 +86,7 @@ def show_add_transaction_form():
     add_transaction_button_frame = ctk.CTkFrame(add_transaction_frame, width=470)
     add_transaction_button_frame.place(x=25, y=530)
 
-    cancel_button = ctk.CTkButton(add_transaction_button_frame, text="Cancel", fg_color="red", text_color="black", font=('Century Gothic' if not js_font else js_font,15), width=225, height=35, command=lambda: cancel_transaction_form(add_transaction_frame))
+    cancel_button = ctk.CTkButton(add_transaction_button_frame, text="Cancel", fg_color="red", text_color="black", font=('Century Gothic' if not js_font else js_font,15), width=225, height=35, command=lambda: cancel_transaction_form(add_transaction_frame, frame_to_show_on_over))
     cancel_button.place(x=0, y=0)
 
     continue_button = ctk.CTkButton(add_transaction_button_frame, text="Continue", font=('Century Gothic' if not js_font else js_font,15), width=225, height=35)
@@ -102,10 +104,9 @@ def mainPage():
     window.update_idletasks()
     main_heading_text.place(x=0, y=(main_heading_frame.winfo_height()/2)-(main_heading_text.winfo_height()/2))
 
-    main_heading_add_transaction_button = ctk.CTkButton(main_heading_frame, text="Add new transaction", height=35, width=200, font=('Century Gothic' if not js_font else js_font,17, "normal"))
-    main_heading_add_transaction_button.place(x=0, y=0)
+    main_heading_add_transaction_button = ctk.CTkButton(main_heading_frame, text="Add new transaction", height=35, width=200, font=('Century Gothic' if not js_font else js_font,17, "normal"), command=lambda e=None: show_add_transaction_form(main_frame, mainPage))
     window.update_idletasks()
-    main_heading_add_transaction_button.place(x=main_frame.winfo_width()-200, y=(main_heading_frame.winfo_height()/2)-17.5)
+    main_heading_add_transaction_button.place(x=screen_width-300, y=25-17.5)
 
     main_container = ctk.CTkScrollableFrame(window, orientation="vertical", width=screen_width-100, height=screen_height-200, bg_color="transparent", fg_color="transparent")
     main_container.place(x=50, y=100)
@@ -154,6 +155,8 @@ def mainPage():
 
 def close_window(event=None):
     window.destroy()
+
+mainPage()
 
 def on_closing():
     open_windows = [child.winfo_name() for child in window.winfo_children() if child.winfo_name() == '!ctktoplevel']

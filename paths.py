@@ -5,16 +5,18 @@ class RouteType(Enum):
     ASSETS_DIR = bin(25558)
     ASSETS_FONT_DIR = bin(52102561502)
     DATABASE_DIR = bin(520)
-    DATABASE_USER = bin(521)
-    DATABASE_MAIN_DIR = bin(1200000000)
+    DATABASE_USER_DIR = bin(521)
+    DATABASE_MAIN_DB = bin(1200000000)
+    DATABASE_USER_EXPENSE_DIR = bin(46552)
 
 class routes:
     def __init__(self, username):
         self.__ASSETS_DIR = os.path.join(os.getcwd(), "assets")
         self.__ASSETS_FONT_DIR = os.path.join(self.__ASSETS_DIR, "font")
         self.__DATABASE_DIR = os.path.join(os.getcwd(), "database")
-        self.__DATABASE_USER = os.path.join(self.__DATABASE_DIR, str(username))
-        self.__DATABASE_MAIN_DIR = os.path.join(self.__DATABASE_USER, "main.db")
+        self.__DATABASE_USER_DIR = os.path.join(self.__DATABASE_DIR, str(username))
+        self.__DATABASE_MAIN_DB = os.path.join(self.__DATABASE_USER_DIR, "main.db")
+        self.__DATABASE_USER_EXPENSE_DIR = os.path.join(self.__DATABASE_USER_DIR, "exp")
 
     def getRoute(self, name: RouteType = RouteType.ASSETS_DIR):
         if name == RouteType.ASSETS_DIR:
@@ -23,10 +25,16 @@ class routes:
             return self.__ASSETS_FONT_DIR
         elif name == RouteType.DATABASE_DIR:
             return self.__DATABASE_DIR
-        elif name == RouteType.DATABASE_USER:
-            return self.__DATABASE_USER
-        elif name == RouteType.DATABASE_MAIN_DIR:
-            return self.__DATABASE_MAIN_DIR
+        elif name == RouteType.DATABASE_USER_DIR:
+            return self.__DATABASE_USER_DIR
+        elif name == RouteType.DATABASE_MAIN_DB:
+            return self.__DATABASE_MAIN_DB
+        elif name == RouteType.DATABASE_USER_EXPENSE_DIR:
+            return self.__DATABASE_USER_EXPENSE_DIR
+        
+    def geDirList(self):
+        return [self.__ASSETS_DIR, self.__ASSETS_DIR, self.__DATABASE_DIR, self.__DATABASE_USER_DIR, self.__DATABASE_USER_EXPENSE_DIR]
+    
 
-a = routes("self")
-d = a.getRoute(RouteType.DATABASE_MAIN_DIR)
+from datetime import datetime
+print(datetime.today().date())
