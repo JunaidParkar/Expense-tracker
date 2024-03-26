@@ -25,3 +25,5 @@ def open_calendar(tk, selected_date, window):
 
 class TransactionModes(Enum):
     INSERT = bin(68115)
+    UPDATE = bin(25210)
+    DELETE = bin(35650)

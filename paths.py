@@ -18,7 +18,7 @@ class routes:
         self.__DATABASE_MAIN_DB = os.path.join(self.__DATABASE_USER_DIR, "main.db")
         self.__DATABASE_USER_EXPENSE_DIR = os.path.join(self.__DATABASE_USER_DIR, "exp")
 
-    def getRoute(self, name: RouteType = RouteType.ASSETS_DIR):
+    def getRoute(self, name: None):
         if name == RouteType.ASSETS_DIR:
             return self.__ASSETS_DIR
         elif name == RouteType.ASSETS_FONT_DIR:
