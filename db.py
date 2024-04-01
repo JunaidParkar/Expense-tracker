@@ -181,18 +181,25 @@ class Database(routes):
         db_cursor.execute("SELECT * FROM month_stats")
         datas = db_cursor.fetchall()
         db_cursor.close()
-        return datas
+        st = {}
+        for data in datas:
+            year = data[2]
+            if year not in st:
+                st[data[2]] = []
+            st[data[2]].append(data)
+        return st
 
-a = Database("self")
+# a = Database("self")
 # a.refreshMainStats()
-print(a.getAllMonthStats())
-# a.add_transaction(500, "c", "n", "neg", "2025-06-15")
-# a.add_transaction(500, "c", "n", "neg", "2025-05-15")
-# a.add_transaction(500, "c", "n", "neg", "2025-01-15")
-# a.add_transaction(500, "c", "n", "neg", "2023-06-15")
-# a.add_transaction(500, "c", "n", "neg", "2023-05-15")
-# a.add_transaction(500, "c", "n", "neg", "2023-01-15")
-# a.add_transaction(500, "c", "n", "neg", "2022-06-15")
-# a.add_transaction(500, "c", "n", "neg", "2022-05-15")
-# a.add_transaction(500, "c", "n", "neg", "2022-01-15")
+# ad = a.getAllMonthStats()
+
+# a.add_transaction(500000, "c", "n", "pos", "2025-06-15")
+# a.add_transaction(500000, "c", "n", "pos", "2025-05-15")
+# a.add_transaction(500000, "c", "n", "pos", "2025-01-15")
+# a.add_transaction(500000, "c", "n", "pos", "2023-06-15")
+# a.add_transaction(500000, "c", "n", "pos", "2023-05-15")
+# a.add_transaction(500000, "c", "n", "pos", "2023-01-15")
+# a.add_transaction(500000, "c", "n", "pos", "2022-06-15")
+# a.add_transaction(500000, "c", "n", "pos", "2022-05-15")
+# a.add_transaction(500000, "c", "n", "pos", "2022-01-15")
 # a.update_transaction(1, 50000, "2024-6-30", "Purchased PS", "gaming", "neg")

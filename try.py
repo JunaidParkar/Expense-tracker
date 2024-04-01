@@ -1,64 +1,34 @@
-import customtkinter as tk
-from tkcalendar import DateEntry
-from datetime import datetime
+import tkinter as tk
 
-def submit_expense():
-    amount = amount_entry.get()
-    description = description_entry.get()
-    category = category_var.get()
-    date = date_entry.get_date()
+class CustomFrame(tk.Frame):
+    def __init__(self, master, *args, **kwargs):
+        tk.Frame.__init__(self, master, *args, **kwargs)
 
-    if not amount or not description or not category or not date:
-        tk.messagebox.showerror("Error", "All fields are required.")
-        return
+        # create a frame for the input fields
+        self.input_frame = tk.Frame(self)
+        self.input_frame.pack(side="top", fill="x")
 
-    expense = {
-        "amount": amount,
-        "description": description,
-        "category": category,
-        "date": date,
-    }
+        # create a checkbox
+        self.checkbox = tk.Checkbutton(self.input_frame, text="Checkbox")
+        self.checkbox.grid(row=0, column=0, padx=10, pady=10)
 
-    print(expense)
+        # create a date entry
+        self.date = tk.Entry(self.input_frame)
+        self.date.grid(row=0, column=1, padx=10, pady=10)
 
-app = tk.CTk()
-app.title("Expense Form")
+        # create an amount entry
+        self.amount = tk.Entry(self.input_frame)
+        self.amount.grid(row=0, column=2, padx=10, pady=10)
 
-screen_width = app.winfo_screenwidth()
-screen_height = app.winfo_screenheight()
+        # create a category entry
+        self.category = tk.Entry(self.input_frame)
+        self.category.grid(row=0, column=3, padx=10, pady=10)
 
-# Set the window size to match the screen size
-# app.geometry(f"{screen_width}x{screen_height}+0+0")
-app.minsize(width=screen_width, height=screen_height)
-app.maxsize(width=screen_width, height=screen_height)
-# app.attributes("-topmost", True)  # Ensure the window stays on top
-app.wm_attributes("-toolwindow", True)
+        # create a description text widget
+        self.description = tk.Text(self.input_frame, height=5, width=50, wrap='word')
+        self.description.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
 
-# Create form fields
-amount_label = tk.CTkLabel(app, text="Amount:")
-amount_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
-amount_entry = tk.CTkEntry(app)
-amount_entry.grid(row=0, column=1, padx=5, pady=5)
-
-description_label = tk.CTkLabel(app, text="Description:")
-description_label.grid(row=1, column=0, padx=5, pady=5, sticky="w")
-description_entry = tk.CTkEntry(app)
-description_entry.grid(row=1, column=1, padx=5, pady=5)
-
-category_label = tk.CTkLabel(app, text="Category:")
-category_label.grid(row=2, column=0, padx=5, pady=5, sticky="w")
-category_var = tk.StringVar()
-category_options = ["Food", "Transportation", "Entertainment", "Other"]
-category_optionmenu = tk.CTkOptionMenu(app, variable=category_var, values=category_options)
-category_optionmenu.grid(row=2, column=1, padx=5, pady=5)
-
-date_label = tk.CTkLabel(app,text="Date:")
-date_label.grid(row=3, column=0, padx=5, pady=5, sticky="w")
-date_entry = DateEntry(app, date_pattern="y-mm-dd")
-date_entry.grid(row=3, column=1, padx=5, pady=5)
-
-# Create submit button
-submit_button = tk.CTkButton(app, text="Submit", command=submit_expense)
-submit_button.grid(row=4, column=0, columnspan=2, padx=5, pady=5, ipadx=10, ipady=5)
-
-app.mainloop()
+root = tk.Tk()
+frame = CustomFrame(root)
+frame.pack(side="top", fill="both", expand=True)
+root.mainloop()
