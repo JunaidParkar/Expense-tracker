@@ -32,9 +32,8 @@ class routes:
         elif name == RouteType.DATABASE_USER_EXPENSE_DIR:
             return self.__DATABASE_USER_EXPENSE_DIR
         
+    def getExpenseDBPathsList(self):
+        return os.listdir(self.getRoute(RouteType.DATABASE_USER_EXPENSE_DIR))
+        
     def geDirList(self):
         return [self.__ASSETS_DIR, self.__ASSETS_DIR, self.__DATABASE_DIR, self.__DATABASE_USER_DIR, self.__DATABASE_USER_EXPENSE_DIR]
-    
-
-from datetime import datetime
-print(datetime.today().date())

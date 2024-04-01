@@ -5,6 +5,9 @@ from tkcalendar import DateEntry
 from functions import open_calendar
 from paths import routes, RouteType
 import os
+from db import Database
+
+database = Database("self")
 
 router = routes("self")
 window = ctk.CTk()
@@ -117,47 +120,50 @@ def mainPage():
     main_container = ctk.CTkScrollableFrame(window, orientation="vertical", width=screen_width-100, height=screen_height-200, bg_color="transparent", fg_color="transparent")
     main_container.place(x=50, y=100)
 
-    for i in range(3):
-        main_year_frame = ctk.CTkScrollableFrame(main_container, orientation="horizontal", width=screen_width-100, height=260, bg_color="transparent", fg_color="transparent", label_text="2025", label_font=('Century Gothic' if not js_font else js_font, 17, "normal"), label_anchor="w")
-        main_year_frame.pack(fill="both", expand=True)
+    monthly_data = database.getAllMonthStats()
 
-        for j in range(10):
-            main_month_card = ctk.CTkFrame(main_year_frame, width=300)
-            main_month_card.pack(side="left", fill="y", expand=True, padx=15)
+    for dt in monthly_data:
+        for i in range(3):
+            main_year_frame = ctk.CTkScrollableFrame(main_container, orientation="horizontal", width=screen_width-100, height=260, bg_color="transparent", fg_color="transparent", label_text="2025", label_font=('Century Gothic' if not js_font else js_font, 17, "normal"), label_anchor="w")
+            main_year_frame.pack(fill="both", expand=True)
 
-            main_month_name = ctk.CTkLabel(main_month_card, text="January", width=280, anchor="w", text_color="#f2b418", font=('Century Gothic' if not js_font else js_font, 20, "normal"))
-            main_month_name.place(x=10, y=10)
+            for j in range(10):
+                main_month_card = ctk.CTkFrame(main_year_frame, width=300)
+                main_month_card.pack(side="left", fill="y", expand=True, padx=15)
 
-            main_month_saving_frame = ctk.CTkFrame(main_month_card, width=280, height=80, bg_color="transparent", fg_color="transparent")
-            main_month_saving_frame.place(x=10, y=50)
+                main_month_name = ctk.CTkLabel(main_month_card, text="January", width=280, anchor="w", text_color="#f2b418", font=('Century Gothic' if not js_font else js_font, 20, "normal"))
+                main_month_name.place(x=10, y=10)
 
-            main_month_saving_heading = ctk.CTkLabel(main_month_saving_frame, text="Available savings", width=280, font=('Century Gothic' if not js_font else js_font, 20, "normal"))
-            main_month_saving_heading.place(x=0, y=10)
+                main_month_saving_frame = ctk.CTkFrame(main_month_card, width=280, height=80, bg_color="transparent", fg_color="transparent")
+                main_month_saving_frame.place(x=10, y=50)
 
-            main_month_saving_amount = ctk.CTkLabel(main_month_saving_frame, text="2000", width=280, font=('Century Gothic' if not js_font else js_font, 17, "normal"))
-            main_month_saving_amount.place(x=0, y=40)
+                main_month_saving_heading = ctk.CTkLabel(main_month_saving_frame, text="Available savings", width=280, font=('Century Gothic' if not js_font else js_font, 20, "normal"))
+                main_month_saving_heading.place(x=0, y=10)
 
-            main_month_income_frame = ctk.CTkFrame(main_month_card, width=280, height=50, bg_color="transparent", fg_color="#4C7A9E")
-            main_month_income_frame.place(x=10, y=130)
+                main_month_saving_amount = ctk.CTkLabel(main_month_saving_frame, text="2000", width=280, font=('Century Gothic' if not js_font else js_font, 17, "normal"))
+                main_month_saving_amount.place(x=0, y=40)
 
-            main_month_income_label = ctk.CTkLabel(main_month_income_frame, text="Income", width=120, height=50, anchor="w", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
-            main_month_income_label.place(x=10, y=0)
+                main_month_income_frame = ctk.CTkFrame(main_month_card, width=280, height=50, bg_color="transparent", fg_color="#4C7A9E")
+                main_month_income_frame.place(x=10, y=130)
 
-            main_month_income_amount = ctk.CTkLabel(main_month_income_frame, text="100T", width=120, height=50, anchor="e", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
-            main_month_income_amount.place(x=280-130)
+                main_month_income_label = ctk.CTkLabel(main_month_income_frame, text="Income", width=120, height=50, anchor="w", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
+                main_month_income_label.place(x=10, y=0)
+
+                main_month_income_amount = ctk.CTkLabel(main_month_income_frame, text="100T", width=120, height=50, anchor="e", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
+                main_month_income_amount.place(x=280-130)
 
 
-            main_month_expense_frame = ctk.CTkFrame(main_month_card, width=280, height=50, bg_color="transparent", fg_color="#8E5757")
-            main_month_expense_frame.place(x=10, y=190)
+                main_month_expense_frame = ctk.CTkFrame(main_month_card, width=280, height=50, bg_color="transparent", fg_color="#8E5757")
+                main_month_expense_frame.place(x=10, y=190)
 
-            main_month_expense_label = ctk.CTkLabel(main_month_expense_frame, text="Expense", width=120, height=50, anchor="w", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
-            main_month_expense_label.place(x=10, y=0)
+                main_month_expense_label = ctk.CTkLabel(main_month_expense_frame, text="Expense", width=120, height=50, anchor="w", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
+                main_month_expense_label.place(x=10, y=0)
 
-            main_month_expense_amount = ctk.CTkLabel(main_month_expense_frame, text="100T", width=120, height=50, anchor="e", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
-            main_month_expense_amount.place(x=280-130)
+                main_month_expense_amount = ctk.CTkLabel(main_month_expense_frame, text="100T", width=120, height=50, anchor="e", font=('Century Gothic' if not js_font else js_font, 17, "normal"))
+                main_month_expense_amount.place(x=280-130)
 
-            set_cursor_to_pointer(main_month_card)
-            set_on_click(main_month_card, j)
+                set_cursor_to_pointer(main_month_card)
+                set_on_click(main_month_card, j)
 
 def close_window(event=None):
     window.destroy()
