@@ -1,34 +1,88 @@
-import tkinter as tk
+import customtkinter as tk
 
-class CustomFrame(tk.Frame):
-    def __init__(self, master, *args, **kwargs):
-        tk.Frame.__init__(self, master, *args, **kwargs)
+class Transaction:
+    def __init__(self, serial, date, amount, description, category, transaction_type):
+        self.serial = serial
+        self.date = date
+        self.amount = amount
+        self.description = description
+        self.category = category
+        self.transaction_type = transaction_type
 
-        # create a frame for the input fields
-        self.input_frame = tk.Frame(self)
-        self.input_frame.pack(side="top", fill="x")
+class Table:
+    def __init__(self, master, transactions):
+        self.master = master
+        self.transactions = transactions
+        self.table_frame = tk.CTkFrame(master)
+        self.table_frame.pack(pady=10)
 
-        # create a checkbox
-        self.checkbox = tk.Checkbutton(self.input_frame, text="Checkbox")
-        self.checkbox.grid(row=0, column=0, padx=10, pady=10)
+        self.headers = ["Serial", "Date", "Amount", "Description", "Category", "Type", "Select"]
+        self.column_widths = [50, 100, 80, 300, 150, 100, 50]
 
-        # create a date entry
-        self.date = tk.Entry(self.input_frame)
-        self.date.grid(row=0, column=1, padx=10, pady=10)
+        self.create_table()
 
-        # create an amount entry
-        self.amount = tk.Entry(self.input_frame)
-        self.amount.grid(row=0, column=2, padx=10, pady=10)
+    def create_table(self):
+        # Create headers
+        for i, header in enumerate(self.headers):
+            header_label = tk.CTkLabel(self.table_frame, text=header, width=self.column_widths[i], anchor='center')
+            header_label.grid(row=0, column=i, sticky='nsew')
 
-        # create a category entry
-        self.category = tk.Entry(self.input_frame)
-        self.category.grid(row=0, column=3, padx=10, pady=10)
+        # Create rows
+        for i, transaction in enumerate(self.transactions):
+            row_frame = tk.CTkFrame(self.table_frame, fg_color='gray', corner_radius=5)
+            row_frame.grid(row=i+1, column=0, columnspan=7, sticky='nsew')
 
-        # create a description text widget
-        self.description = tk.Text(self.input_frame, height=5, width=50, wrap='word')
-        self.description.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+            for j, value in enumerate(self.get_row_values(transaction)):
+                cell_textbox = tk.CTkTextbox(row_frame, width=self.column_widths[j], height=1, wrap='char', border_width=0)
+                cell_textbox.insert('0.0', value)
+                cell_textbox.configure(state='disabled')
+                cell_textbox.grid(row=0, column=j, sticky='nsew')
 
-root = tk.Tk()
-frame = CustomFrame(root)
-frame.pack(side="top", fill="both", expand=True)
+    def get_row_values(self, transaction):
+        return (transaction.serial, transaction.date, transaction.amount,
+                transaction.description, transaction.category, transaction.transaction_type, '')
+
+root = tk.CTk()
+
+transactions = [
+    Transaction(1, '2023-01-01', 100, 'Payment to XYZ kjbn byvbnv nv gvbn ghvtyggvtygv ftyv jhv gjfb gvtv bghdcrfv  cgtkfouljhn cvgytc bgkycybgctdgbty5chn njbyuvm njgtyc   b', 'Expenses', 'Out'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In'),
+    Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In')
+]
+
+# table = Table(root, transactions)
+
 root.mainloop()
