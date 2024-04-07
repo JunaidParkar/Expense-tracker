@@ -188,6 +188,14 @@ class Database(routes):
                 st[data[2]] = []
             st[data[2]].append(data)
         return st
+    
+    def getSpecificMonthStat(self, date):
+        date = date.split("-")
+        db_conn = connect(os.path.join(self.getRoute(RouteType.DATABASE_USER_EXPENSE_DIR), f"{date[0]}.db"))
+        db_cursor = db_conn.cursor()
+        db_cursor.execute(f"SELECT * FROM {self.months[int(date[1]) - 1]}")
+        data = db_cursor.fetchall()
+        return data
 
 # a = Database("self")
 # a.refreshMainStats()

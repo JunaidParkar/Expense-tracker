@@ -83,6 +83,6 @@ transactions = [
     Transaction(2, '2023-01-02', 200, 'Salary from ABC', 'Income', 'In')
 ]
 
-# table = Table(root, transactions)
+table = Table(root, transactions)
 
 root.mainloop()
